@@ -1,0 +1,107 @@
+@page "/ticket/{Id:int}"
+@using SoporteLab.Web.Models
+@using SoporteLab.Web.Services
+@inject TicketService TicketService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Detalle del Ticket</PageTitle>
+
+<h1>Detalle del Ticket #@Id</h1>
+<hr />
+
+@if (ticket == null)
+{
+    <p><em>Buscando la información del ticket...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="form-section text-start">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="m-0 text-white">@ticket.Titulo</h2>
+                        @{
+                            var badgeClass = ticket.Prioridad switch {
+                                "Alta" => "badge-alta",
+                                "Media" => "badge-media",
+                                "Baja" => "badge-baja",
+                                _ => "bg-secondary"
+                            };
+                        }
+                        <span class="badge @badgeClass p-2">
+                            Prioridad @ticket.Prioridad
+                        </span>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <p class="mb-1 strong text-muted">Solicitante:</p>
+                        <h5 class="text-white">@ticket.Solicitante</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 strong text-muted">Categoría:</p>
+                        <h5 class="text-white">@ticket.Categoria</h5>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <p class="mb-1 strong text-muted">Descripción detallada de la Falla:</p>
+                    <div class="p-3 border border-secondary rounded bg-dark text-white" style="white-space: pre-wrap; min-height: 100px;">
+                        @ticket.Descripcion
+                    </div>
+                </div>
+
+                <div class="row mb-4 align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-1 strong text-muted">Fecha de Apertura:</p>
+                        <span class="text-white">@ticket.FechaRegistro.ToString("dd/MM/yyyy HH:mm:ss")</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 strong text-muted">Estado Actual:</p>
+                        <span class="badge @(ticket.Estado == "Respondido" ? "bg-success" : "bg-info") p-2">
+                            @ticket.Estado
+                        </span>
+                    </div>
+                </div>
+
+                <hr class="border-secondary" />
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="/" class="btn btn-soporte-cancelar">Volver a la Tabla</a>
+                    <div class="gap-2">
+                        <a href="/editar/@ticket.Id" class="btn btn-soporte-guardar">Modificar Datos</a>
+                        @if (ticket.Estado != "Respondido")
+                        {
+                            <button @onclick="MarcarRespondido" class="btn btn-success">Marcar Respondido</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Ticket? ticket;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ticket = await TicketService.GetTicketByIdAsync(Id);
+    }
+
+    private async Task MarcarRespondido()
+    {
+        if (ticket != null)
+        {
+            ticket.Estado = "Respondido";
+            var exito = await TicketService.UpdateTicketAsync(ticket);
+            if (exito)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
+    }
+}

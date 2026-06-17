@@ -146,3 +146,4 @@ C:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Api\obj\Debug\net10.0\ref
 C:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Api\obj\Debug\net10.0\SoporteLab.Api.pdb
 C:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Api\obj\Debug\net10.0\SoporteLab.Api.genruntimeconfig.cache
 C:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Api\obj\Debug\net10.0\ref\SoporteLab.Api.dll
+C:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Api\obj\Debug\net10.0\SoporteLab.Api.sourcelink.json

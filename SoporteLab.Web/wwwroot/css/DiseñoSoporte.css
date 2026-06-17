@@ -1,0 +1,196 @@
+/* SoporteLab.Web/wwwroot/css/DiseñoSoporte.css */
+
+:root {
+    --main-orange: #e26410;
+    --main-blue: #365d89;
+    --text-blue-light: #709bc9; /* Un azul más suave para que la tabla sea legible sobre negro */
+    --bg-dark: #121212; /* Fondo negro */
+    --card-dark: #1e1e1e; /* Fondo oscuro para el formulario */
+}
+
+/* --- Estilos Globales (Modo Oscuro) --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-blue-light); 
+}
+
+h1, h2, h3, h4 {
+    color: white; /* Títulos en blanco brillante */
+    font-weight: 600;
+}
+
+p, hr {
+    color: var(--text-blue-light);
+}
+
+/* --- Mejoras de la Barra Lateral (NavMenu) --- */
+/* --- Mejoras de la Barra Lateral (NavMenu) --- */
+.sidebar {
+    background-color: var(--main-orange) !important;
+}
+
+.top-row.navbar {
+    background-color: var(--main-orange) !important;
+}
+
+.navbar-brand {
+    color: white !important; /* Blanco brillante */
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: white !important; /* Letras blancas */
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    color: var(--bg-dark) !important; /* Negro al pasar el mouse */
+}
+
+.nav-link.active {
+    background-color: rgba(0, 0, 0, 0.2); 
+    border-left: 4px solid white;
+    color: white !important;
+}
+
+.nav-link.active .bi {
+    color: white !important;
+}
+
+/* --- Mejoras de la Tabla de Tickets (Home) --- */
+.table-soporte {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    background-color: var(--card-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.table-soporte table {
+    color: var(--text-blue-light);
+}
+
+.table-soporte .table-dark {
+    background-color: #0a0a0a !important; /* Encabezado de tabla súper oscuro */
+    color: var(--main-blue);
+}
+
+.table-soporte .table-dark th {
+    font-weight: 600;
+    border-bottom: 2px solid var(--main-orange); /* Línea naranja divisoria */
+}
+
+/* Colores alternos para las filas en modo oscuro */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    color: var(--text-blue-light);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.table-hover > tbody > tr:hover > * {
+    color: var(--main-blue);
+    background-color: rgba(226, 100, 16, 0.15); /* Resplandor naranja al pasar el mouse */
+}
+
+/* Badges */
+/* Badges de Prioridad */
+.badge-alta {
+    background-color: #dc3545 !important; /* Rojo vibrante */
+    color: white !important;
+    font-weight: bold;
+}
+
+.badge-media {
+    background-color: var(--main-orange) !important; /* Tu naranja personalizado */
+    color: white !important;
+    font-weight: bold;
+}
+
+.badge-baja {
+    background-color: #ffc107 !important; /* Amarillo */
+    color: #212529 !important; /* Letras oscuras para que se lean bien en el fondo amarillo */
+    font-weight: bold;
+}
+
+.bg-secondary {
+    background-color: #333 !important;
+    color: var(--text-blue-light) !important;
+}
+
+/* --- Mejoras del Formulario (Crear Ticket) --- */
+.form-section {
+    background-color: var(--card-dark);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    border: 1px solid #333;
+}
+
+.form-label-soporte {
+    color: var(--main-blue);
+    font-weight: 600;
+}
+
+/* Adaptar las casillas de texto al fondo negro */
+.form-control, .form-select {
+    background-color: #222;
+    border: 1px solid #444;
+    color: var(--text-blue-light);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #2a2a2a;
+    border-color: var(--main-orange);
+    color: var(--text-blue-light);
+    box-shadow: 0 0 0 0.25rem rgba(226, 100, 16, 0.25);
+}
+
+.form-control::placeholder {
+    color: #555;
+}
+
+/* --- Botones --- */
+.btn-soporte-guardar {
+    background-color: var(--main-blue);
+    border-color: var(--main-blue);
+    color: white;
+    font-weight: 500;
+}
+
+.btn-soporte-guardar:hover {
+    background-color: #28476e;
+    color: white;
+}
+
+.btn-soporte-cancelar {
+    background-color: #444;
+    border-color: #444;
+    color: var(--text-blue-light);
+    font-weight: 500;
+}
+
+.btn-soporte-cancelar:hover {
+    background-color: #555;
+    color: white;
+}
+
+/* --- Eliminadores de la plantilla por defecto --- */
+
+/* Matar el degradado morado de la barra lateral */
+.sidebar {
+    background-image: none !important;
+    background-color: var(--main-orange) !important;
+}
+
+/* Matar el fondo blanco de la barra superior derecha */
+.top-row {
+    background-color: var(--bg-dark) !important;
+    border-bottom: 1px solid #333 !important;
+}
+
+/* Matar cualquier fondo blanco residual en la página */
+.page, main, article {
+    background-color: var(--bg-dark) !important;
+}

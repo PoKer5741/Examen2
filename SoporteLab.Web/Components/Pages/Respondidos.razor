@@ -1,31 +1,22 @@
-﻿@page "/"
-@rendermode InteractiveServer
+@page "/respondidos"
 @using SoporteLab.Web.Models
 @using SoporteLab.Web.Services
 @inject TicketService TicketService
 
-<PageTitle>Tickets Pendientes</PageTitle>
+<PageTitle>Tickets Respondidos</PageTitle>
 
-<h1>Sistema de Soporte - Pendientes</h1>
-<p>Lista de fallas registradas que requieren atención inmediata.</p>
+<h1>Historial de Tickets Respondidos</h1>
+<p>Registro de fallas que ya fueron solucionadas y cerradas.</p>
 
 <hr />
 
-@if (mostrarErrorActualizacion)
-{
-    <div class="alert alert-danger mb-4 d-flex justify-content-between align-items-center">
-        <span><strong>¡Error al responder!</strong> La API rechazó la actualización del estado. Revisa la terminal del proyecto Web o la API para ver el código de error.</span>
-        <button type="button" class="btn-close" @onclick="() => mostrarErrorActualizacion = false"></button>
-    </div>
-}
-
 @if (tickets == null)
 {
-    <p><em>Cargando tickets pendientes...</em></p>
+    <p><em>Cargando historial de soluciones...</em></p>
 }
 else if (tickets.Count == 0)
 {
-    <div class="alert alert-info">¡Felicidades! No hay tickets pendientes en el sistema.</div>
+    <div class="alert alert-info">Aún no se ha respondido ningún ticket.</div>
 }
 else
 {
@@ -68,14 +59,11 @@ else
                                 <span class="badge bg-secondary">@ticket.Prioridad</span>
                             }
                         </td>
-                        <td><span class="text-info">@ticket.Estado</span></td>
+                        <td><span class="badge bg-success">@ticket.Estado</span></td>
                         <td>@ticket.Solicitante</td>
                         <td>@ticket.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>
-                            <div class="btn-group gap-1">
-                                <a href="/ticket/@ticket.Id" class="btn btn-sm btn-outline-info">Ver</a>
-                                <button @onclick="() => MarcarComoRespondido(ticket)" class="btn btn-sm btn-success">Respondido</button>
-                            </div>
+                            <a href="/ticket/@ticket.Id" class="btn btn-sm btn-outline-info">Ver Detalle</a>
                         </td>
                     </tr>
                 }
@@ -86,39 +74,11 @@ else
 
 @code {
     private List<Ticket>? tickets;
-    private bool mostrarErrorActualizacion = false;
 
     protected override async Task OnInitializedAsync()
     {
-        await CargarTicketsPendientes();
-    }
-
-    private async Task CargarTicketsPendientes()
-    {
         var todosLosTickets = await TicketService.GetTicketsAsync();
-        tickets = todosLosTickets?.Where(t => t.Estado != "Respondido").ToList();
-    }
-
-    private async Task MarcarComoRespondido(Ticket ticketModificar)
-    {
-        mostrarErrorActualizacion = false;
-        
-        // Guardamos el estado original por si la API falla y hay que revertir
-        var estadoOriginal = ticketModificar.Estado;
-        ticketModificar.Estado = "Respondido";
-        
-        var exito = await TicketService.UpdateTicketAsync(ticketModificar);
-        if (exito)
-        {
-            await CargarTicketsPendientes();
-            StateHasChanged(); 
-        }
-        else
-        {
-            // Si falló, activamos el cartel rojo y devolvemos el estado a su forma original
-            mostrarErrorActualizacion = true;
-            ticketModificar.Estado = estadoOriginal;
-            StateHasChanged();
-        }
+        // LINQ filtra y captura estrictamente los que dicen "Respondido"
+        tickets = todosLosTickets?.Where(t => t.Estado == "Respondido").ToList();
     }
 }

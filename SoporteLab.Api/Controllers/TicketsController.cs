@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SoporteLab.Api.Data;
 using SoporteLab.Api.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SoporteLab.Api.Controllers
@@ -67,6 +68,37 @@ namespace SoporteLab.Api.Controllers
 
             // Devuelve HTTP 201 Created con la ruta para consultar el recurso creado
             return CreatedAtAction(nameof(GetById), new { id = nuevoTicket.Id }, nuevoTicket);
+        }
+
+        // NUEVO: PUT: /api/tickets/{id} (Actualizar un ticket existente)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Ticket ticketActualizado)
+        {
+            if (id != ticketActualizado.Id)
+            {
+                return BadRequest(new { Error = "El ID de la URL no coincide con el ID del ticket." });
+            }
+
+            // Le decimos a Entity Framework que este ticket ha sido modificado
+            _context.Entry(ticketActualizado).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Tickets.Any(e => e.Id == id))
+                {
+                    return NotFound(new { Mensaje = $"El ticket con ID {id} no existe." });
+                }
+                else
+                {
+                    throw; // Si es otro tipo de error de base de datos, lo lanzamos
+                }
+            }
+
+            return NoContent(); // Devuelve HTTP 204 (Éxito, pero no hay nada nuevo que devolver)
         }
     }
 }
