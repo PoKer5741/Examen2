@@ -1,0 +1,74 @@
+@page "/crear"
+@using SoporteLab.Web.Models
+@using SoporteLab.Web.Services
+@inject TicketService TicketService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Nuevo Ticket</PageTitle>
+
+<h1>Crear un Nuevo Ticket</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <EditForm Model="ticket" OnValidSubmit="GuardarTicket" FormName="FormularioTicket">
+            <DataAnnotationsValidator />
+
+            <div class="mb-3">
+                <label class="form-label">Título:</label>
+                <InputText @bind-Value="ticket.Titulo" class="form-control" placeholder="Ej. El mouse no funciona" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Descripción:</label>
+                <InputTextArea @bind-Value="ticket.Descripcion" class="form-control" rows="3" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Categoría:</label>
+                <InputSelect @bind-Value="ticket.Categoria" class="form-select" required>
+                    <option value="">Seleccione una...</option>
+                    <option value="Hardware">Hardware</option>
+                    <option value="Software">Software</option>
+                    <option value="Redes">Redes</option>
+                </InputSelect>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Prioridad:</label>
+                <InputSelect @bind-Value="ticket.Prioridad" class="form-select" required>
+                    <option value="">Seleccione una...</option>
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                </InputSelect>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Solicitante:</label>
+                <InputText @bind-Value="ticket.Solicitante" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Ticket</button>
+            <a href="/" class="btn btn-secondary">Cancelar</a>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    // Creamos un ticket vacío para que el formulario lo llene
+    [SupplyParameterFromForm]
+    private Ticket ticket { get; set; } = new();
+
+    private async Task GuardarTicket()
+    {
+        // Ya no forzamos la prioridad, ahora toma la que elegiste en el formulario
+        var exito = await TicketService.CreateTicketAsync(ticket);
+        
+        if (exito)
+        {
+            // Si se guarda bien en la API, lo devolvemos a la tabla de inicio
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}

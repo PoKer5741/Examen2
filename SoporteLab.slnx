@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SoporteLab.Api/SoporteLab.Api.csproj" />
+  <Project Path="SoporteLab.Web/SoporteLab.Web.csproj" />
+</Solution>

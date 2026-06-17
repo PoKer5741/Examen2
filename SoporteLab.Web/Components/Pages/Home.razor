@@ -1,0 +1,62 @@
+﻿@page "/"
+@using SoporteLab.Web.Models
+@using SoporteLab.Web.Services
+@inject TicketService TicketService
+
+<PageTitle>Lista de Tickets</PageTitle>
+
+<h1>Sistema de Soporte</h1>
+<p>Lista de tickets registrados actualmente en la base de datos.</p>
+
+<hr />
+
+@if (tickets == null)
+{
+    <p><em>Cargando tickets desde la API...</em></p>
+}
+else if (tickets.Count == 0)
+{
+    <div class="alert alert-info">No hay tickets registrados en el sistema.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Solicitante</th>
+                <th>Fecha de Registro</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in tickets)
+            {
+                <tr>
+                    <td>@ticket.Id</td>
+                    <td>@ticket.Titulo</td>
+                    <td>@ticket.Categoria</td>
+                    <td><span class="badge bg-secondary">@ticket.Prioridad</span></td>
+                    <td>@ticket.Estado</td>
+                    <td>@ticket.Solicitante</td>
+                    <td>@ticket.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    // Aquí guardaremos la lista de tickets que nos devuelva la API
+    private List<Ticket>? tickets;
+
+    // Este método se ejecuta automáticamente al cargar la página
+    protected override async Task OnInitializedAsync()
+    {
+        // Usamos el "mensajero" para pedirle los datos a la API
+        tickets = await TicketService.GetTicketsAsync();
+    }
+}

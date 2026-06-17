@@ -1,0 +1,34 @@
+@base_url = http://localhost:5072
+
+### POST
+POST {{base_url}}/api/tickets
+Content-Type: application/json
+
+{
+  "titulo": "Pantalla azul en Laboratorio 3",
+  "descripcion": "PA' la captura",
+  "categoria": "Hardware",
+  "prioridad": "Alta",
+  "solicitante": "Isaac Vega"
+}
+
+###
+
+### 2. Listar todos los Tickets (GET)
+GET {{base_url}}/api/tickets
+
+###
+
+### 3. Intentar buscar un Ticket inexistente (Prueba de error 404)
+GET {{base_url}}/api/tickets/3
+
+###
+
+### 4. Intentar crear un Ticket inválido (Prueba de validación 400)
+POST {{base_url}}/api/tickets
+Content-Type: application/json
+
+{
+  "titulo": "",
+  "solicitante": ""
+}
