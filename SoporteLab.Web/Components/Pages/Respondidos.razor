@@ -1,4 +1,5 @@
 @page "/respondidos"
+@rendermode InteractiveServer
 @using SoporteLab.Web.Models
 @using SoporteLab.Web.Services
 @inject TicketService TicketService
@@ -63,7 +64,10 @@ else
                         <td>@ticket.Solicitante</td>
                         <td>@ticket.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>
-                            <a href="/ticket/@ticket.Id" class="btn btn-sm btn-outline-info">Ver Detalle</a>
+                            <div class="btn-group gap-1">
+                                <a href="/ticket/@ticket.Id" class="btn btn-sm btn-outline-info">Ver</a>
+                                <button @onclick="() => Eliminar(ticket.Id)" class="btn btn-sm btn-danger">Eliminar</button>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -77,8 +81,25 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await CargarTicketsRespondidos();
+    }
+
+    private async Task CargarTicketsRespondidos()
+    {
         var todosLosTickets = await TicketService.GetTicketsAsync();
         // LINQ filtra y captura estrictamente los que dicen "Respondido"
         tickets = todosLosTickets?.Where(t => t.Estado == "Respondido").ToList();
+    }
+
+    private async Task Eliminar(int id)
+    {
+        // Llama al servicio para borrarlo de la base de datos
+        var exito = await TicketService.DeleteTicketAsync(id);
+        if (exito)
+        {
+            // Recarga la lista para que el ticket desaparezca de la pantalla
+            await CargarTicketsRespondidos();
+            StateHasChanged();
+        }
     }
 }

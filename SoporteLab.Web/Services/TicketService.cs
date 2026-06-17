@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using SoporteLab.Web.Models;
-using System;
 
 namespace SoporteLab.Web.Services
 {
@@ -43,7 +43,7 @@ namespace SoporteLab.Web.Services
             {
                 var response = await _httpClient.PutAsJsonAsync($"api/tickets/{ticketActualizado.Id}", ticketActualizado);
                 
-                // SI LA API RECHAZA EL TICKET, ESTO NOS DIRÁ POR QUÉ EN LA TERMINAL
+                
                 if (!response.IsSuccessStatusCode)
                 {
                     Console.WriteLine($"[ERROR API] Código de estado: {response.StatusCode}");
@@ -56,6 +56,21 @@ namespace SoporteLab.Web.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR CRÍTICO] Fallo de red al conectar con la API: {ex.Message}");
+                return false;
+            }
+        }
+
+        
+        public async Task<bool> DeleteTicketAsync(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/tickets/{id}");
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR CRÍTICO] Fallo al eliminar: {ex.Message}");
                 return false;
             }
         }

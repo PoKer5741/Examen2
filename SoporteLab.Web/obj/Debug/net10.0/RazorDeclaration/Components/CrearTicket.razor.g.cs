@@ -112,21 +112,32 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (58,8)-(74,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\CrearTicket.razor"
+#line (76,8)-(103,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\CrearTicket.razor"
 
-    // Creamos un ticket vacío para que el formulario lo llene
     [SupplyParameterFromForm]
     private Ticket ticket { get; set; } = new();
 
+    private bool mostrarError = false;
+    private bool mostrarExito = false;
+
     private async Task GuardarTicket()
     {
-        // Ya no forzamos la prioridad, ahora toma la que elegiste en el formulario
+        mostrarError = false;
+        mostrarExito = false;
+        
+        ticket.FechaRegistro = DateTime.Now;
+        ticket.Estado = "Abierto";
+
         var exito = await TicketService.CreateTicketAsync(ticket);
         
         if (exito)
         {
-            // Si se guarda bien en la API, lo devolvemos a la tabla de inicio
-            NavigationManager.NavigateTo("/");
+            mostrarExito = true;
+            ticket = new(); // <-- ¡El truco! Instancia un objeto vacío y limpia por completo el formulario
+        }
+        else
+        {
+            mostrarError = true; 
         }
     }
 
@@ -134,24 +145,6 @@ using SoporteLab.Web.Services
 #line hidden
 #nullable disable
 
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
-#nullable restore
-#line (5,9)-(5,26) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\CrearTicket.razor"
-NavigationManager
-
-#line default
-#line hidden
-#nullable disable
-         
-#nullable restore
-#line (5,27)-(5,44) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\CrearTicket.razor"
-NavigationManager
-
-#line default
-#line hidden
-#nullable disable
-         { get; set; }
-         = default!;
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
 #nullable restore
 #line (4,9)-(4,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\CrearTicket.razor"

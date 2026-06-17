@@ -1,0 +1,49 @@
+@SoporteLab_HostAddress = http://localhost:5072
+
+### 1. Listar todos los tickets  
+GET {{SoporteLab_HostAddress}}/api/tickets
+Accept: application/json
+
+###
+
+### 2. Crear un nuevo ticket  
+POST {{SoporteLab_HostAddress}}/api/tickets
+Content-Type: application/json
+
+{
+  "titulo": "Fallo en conexión WiFi",
+  "descripcion": "No hay acceso a internet en el laboratorio de redes desde las 8:00 AM.",
+  "categoria": "Redes",
+  "prioridad": "Alta",
+  "estado": "Abierto",
+  "solicitante": "Isaac Vega"
+}
+
+###
+
+### 3. Consultar un ticket por ID   
+GET {{SoporteLab_HostAddress}}/api/tickets/1
+Accept: application/json
+
+###
+
+### 4. Actualizar un ticket existente   
+PUT {{SoporteLab_HostAddress}}/api/tickets/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "titulo": "Fallo en conexión WiFi - SOLUCIONADO",
+  "descripcion": "El router principal fue reiniciado y la conexión se restableció.",
+  "categoria": "Redes",
+  "prioridad": "Alta",
+  "estado": "Respondido",
+  "solicitante": "Isaac Vega",
+  "fechaRegistro": "2026-06-17T08:30:00"
+}
+
+###
+
+### 5. Eliminar un ticket  
+DELETE {{SoporteLab_HostAddress}}/api/tickets/1
+Accept: application/json

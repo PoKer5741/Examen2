@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace SoporteLab.Web.Components.Pages
+namespace SoporteLab.Web.Components
 {
     #line default
     using global::System;
@@ -79,13 +79,13 @@ using SoporteLab.Web.Components.Layout
 #nullable disable
     ;
 #nullable restore
-#line (3,2)-(3,29) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (2,2)-(2,29) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
 using SoporteLab.Web.Models
 
 #nullable disable
     ;
 #nullable restore
-#line (4,2)-(4,31) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (3,2)-(3,31) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
 using SoporteLab.Web.Services
 
 #nullable disable
@@ -95,16 +95,15 @@ using SoporteLab.Web.Services
     [global::Microsoft.AspNetCore.Components.RouteAttribute(
     // language=Route,Component
 #nullable restore
-#line (1,7)-(1,10) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
-"/"
+#line (1,7)-(1,25) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
+"/editar/{Id:int}"
 
 #line default
 #line hidden
 #nullable disable
     )]
-    [global::SoporteLab.Web.Components.Pages.Home.__PrivateComponentRenderModeAttribute]
     #nullable restore
-    public partial class Home : global::Microsoft.AspNetCore.Components.ComponentBase
+    public partial class EditarTicket : global::Microsoft.AspNetCore.Components.ComponentBase
     #nullable disable
     {
         #pragma warning disable 1998
@@ -113,42 +112,35 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (87,8)-(124,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (81,8)-(111,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
 
-    private List<Ticket>? tickets;
-    private bool mostrarErrorActualizacion = false;
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Ticket? ticket { get; set; }
+
+    private bool mostrarError = false;
 
     protected override async Task OnInitializedAsync()
     {
-        await CargarTicketsPendientes();
+        // Traemos los datos originales del ticket al abrir la página
+        ticket ??= await TicketService.GetTicketByIdAsync(Id);
     }
 
-    private async Task CargarTicketsPendientes()
+    private async Task ActualizarTicket()
     {
-        var todosLosTickets = await TicketService.GetTicketsAsync();
-        tickets = todosLosTickets?.Where(t => t.Estado != "Respondido").ToList();
-    }
-
-    private async Task MarcarComoRespondido(Ticket ticketModificar)
-    {
-        mostrarErrorActualizacion = false;
-        
-        // Guardamos el estado original por si la API falla y hay que revertir
-        var estadoOriginal = ticketModificar.Estado;
-        ticketModificar.Estado = "Respondido";
-        
-        var exito = await TicketService.UpdateTicketAsync(ticketModificar);
-        if (exito)
+        if (ticket != null)
         {
-            await CargarTicketsPendientes();
-            StateHasChanged(); 
-        }
-        else
-        {
-            // Si falló, activamos el cartel rojo y devolvemos el estado a su forma original
-            mostrarErrorActualizacion = true;
-            ticketModificar.Estado = estadoOriginal;
-            StateHasChanged();
+            var exito = await TicketService.UpdateTicketAsync(ticket);
+            if (exito)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                mostrarError = true; // Mostramos error si la API está apagada o falla
+            }
         }
     }
 
@@ -158,7 +150,25 @@ using SoporteLab.Web.Services
 
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
 #nullable restore
-#line (5,9)-(5,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (5,9)-(5,26) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
+NavigationManager
+
+#line default
+#line hidden
+#nullable disable
+         
+#nullable restore
+#line (5,27)-(5,44) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
+NavigationManager
+
+#line default
+#line hidden
+#nullable disable
+         { get; set; }
+         = default!;
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
+#nullable restore
+#line (4,9)-(4,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
 TicketService
 
 #line default
@@ -166,7 +176,7 @@ TicketService
 #nullable disable
          
 #nullable restore
-#line (5,23)-(5,36) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (4,23)-(4,36) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\EditarTicket.razor"
 TicketService
 
 #line default
@@ -174,12 +184,6 @@ TicketService
 #nullable disable
          { get; set; }
          = default!;
-        private sealed class __PrivateComponentRenderModeAttribute : global::Microsoft.AspNetCore.Components.RenderModeAttribute
-        {
-            private static global::Microsoft.AspNetCore.Components.IComponentRenderMode ModeImpl => InteractiveServer
-            ;
-            public override global::Microsoft.AspNetCore.Components.IComponentRenderMode Mode => ModeImpl;
-        }
     }
 }
 #pragma warning restore 1591

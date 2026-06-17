@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoporteLab.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dc932ca4473675238cf6d8124a4d1f72475a924")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+792b45193d3bc95b4e4167792bc4325c1a67c68f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoporteLab.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoporteLab.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

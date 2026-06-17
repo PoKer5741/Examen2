@@ -1,10 +1,10 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SoporteLab.Api.Data;
 using SoporteLab.Api.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SoporteLab.Api.Controllers
 {
@@ -19,7 +19,7 @@ namespace SoporteLab.Api.Controllers
             _context = context;
         }
 
-        // GET: /api/tickets (Listar todos)
+        // GET  (Listar todos)
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,7 +27,7 @@ namespace SoporteLab.Api.Controllers
             return Ok(tickets); // Devuelve HTTP 200
         }
 
-        // GET: /api/tickets/{id} (Consultar por ID)
+        // GET 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -41,11 +41,11 @@ namespace SoporteLab.Api.Controllers
             return Ok(ticket);
         }
 
-        // POST: /api/tickets (Crear nuevo ticket)
+        // POST 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Ticket nuevoTicket)
         {
-            // Validaciones mínimas requeridas por la rúbrica
+             
             if (string.IsNullOrWhiteSpace(nuevoTicket.Titulo))
             {
                 return BadRequest(new { Error = "El título no puede estar vacío." }); // Devuelve HTTP 400
@@ -56,7 +56,7 @@ namespace SoporteLab.Api.Controllers
                 return BadRequest(new { Error = "El solicitante no puede estar vacío." }); // Devuelve HTTP 400
             }
 
-            // Forzar fecha de registro del servidor y estado inicial seguro
+            
             nuevoTicket.FechaRegistro = DateTime.Now;
             if (string.IsNullOrWhiteSpace(nuevoTicket.Estado))
             {
@@ -66,11 +66,11 @@ namespace SoporteLab.Api.Controllers
             _context.Tickets.Add(nuevoTicket);
             await _context.SaveChangesAsync();
 
-            // Devuelve HTTP 201 Created con la ruta para consultar el recurso creado
+            // Devuelve HTTP 201  
             return CreatedAtAction(nameof(GetById), new { id = nuevoTicket.Id }, nuevoTicket);
         }
 
-        // NUEVO: PUT: /api/tickets/{id} (Actualizar un ticket existente)
+        //  PUT: 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Ticket ticketActualizado)
         {
@@ -79,7 +79,7 @@ namespace SoporteLab.Api.Controllers
                 return BadRequest(new { Error = "El ID de la URL no coincide con el ID del ticket." });
             }
 
-            // Le decimos a Entity Framework que este ticket ha sido modificado
+            // ticket ha sido modificado
             _context.Entry(ticketActualizado).State = EntityState.Modified;
 
             try
@@ -94,11 +94,27 @@ namespace SoporteLab.Api.Controllers
                 }
                 else
                 {
-                    throw; // Si es otro tipo de error de base de datos, lo lanzamos
+                    throw; // Si es otro tipo de error de base de datos
                 }
             }
 
-            return NoContent(); // Devuelve HTTP 204 (Éxito, pero no hay nada nuevo que devolver)
+            return NoContent(); // Devuelve HTTP 204 
+        }
+
+        // DELETE: 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound(new { Mensaje = $"El ticket con ID {id} no existe." });
+            }
+
+            _context.Tickets.Remove(ticket);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
