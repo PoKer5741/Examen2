@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoporteLab.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce9fccfb49834621853f7b3fdca87ff7410eccd0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+58d99e9778a85b9dc0435b532250edb15d3299b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoporteLab.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoporteLab.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

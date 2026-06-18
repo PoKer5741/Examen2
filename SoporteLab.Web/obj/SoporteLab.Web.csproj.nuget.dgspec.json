@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj": {}
+    "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj": {
+    "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj",
+        "projectUniqueName": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj",
         "projectName": "SoporteLab.Web",
-        "projectPath": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj",
+        "projectPath": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj",
         "packagesPath": "C:\\Users\\poker\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Web\\obj\\",
+        "outputPath": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\poker\\AppData\\Roaming\\NuGet\\NuGet.Config"

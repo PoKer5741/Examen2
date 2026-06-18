@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kZRw52L/87M=",
+  "dgSpecHash": "6ZL92sT4Hu4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Api\\SoporteLab.Api.csproj",
+  "projectFilePath": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Api\\SoporteLab.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\poker\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\poker\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.8\\microsoft.aspnetcore.openapi.10.0.8.nupkg.sha512",

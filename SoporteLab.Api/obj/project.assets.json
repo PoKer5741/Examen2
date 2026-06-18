@@ -2476,11 +2476,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Api\\SoporteLab.Api.csproj",
+      "projectUniqueName": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Api\\SoporteLab.Api.csproj",
       "projectName": "SoporteLab.Api",
-      "projectPath": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Api\\SoporteLab.Api.csproj",
+      "projectPath": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Api\\SoporteLab.Api.csproj",
       "packagesPath": "C:\\Users\\poker\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Api\\obj\\",
+      "outputPath": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\poker\\AppData\\Roaming\\NuGet\\NuGet.Config"

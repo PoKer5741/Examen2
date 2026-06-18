@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LRQaVJ6j3CA=",
+  "dgSpecHash": "G/y1sQrHImg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\poker\\Downloads\\pratica\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj",
+  "projectFilePath": "C:\\Users\\poker\\Downloads\\UCR\\Examen\\SoporteLab\\SoporteLab.Web\\SoporteLab.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\poker\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.8\\microsoft.aspnetcore.app.internal.assets.10.0.8.nupkg.sha512"
   ],
