@@ -79,13 +79,13 @@ using SoporteLab.Web.Components.Layout
 #nullable disable
     ;
 #nullable restore
-#line (3,2)-(3,29) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Respondidos.razor"
+#line (3,2)-(3,29) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
 using SoporteLab.Web.Models
 
 #nullable disable
     ;
 #nullable restore
-#line (4,2)-(4,31) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Respondidos.razor"
+#line (4,2)-(4,31) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
 using SoporteLab.Web.Services
 
 #nullable disable
@@ -95,16 +95,16 @@ using SoporteLab.Web.Services
     [global::Microsoft.AspNetCore.Components.RouteAttribute(
     // language=Route,Component
 #nullable restore
-#line (1,7)-(1,21) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Respondidos.razor"
-"/respondidos"
+#line (1,7)-(1,25) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
+"/editar/{Id:int}"
 
 #line default
 #line hidden
 #nullable disable
     )]
-    [global::SoporteLab.Web.Components.Pages.Respondidos.__PrivateComponentRenderModeAttribute]
+    [global::SoporteLab.Web.Components.Pages.EditarTicket.__PrivateComponentRenderModeAttribute]
     #nullable restore
-    public partial class Respondidos : global::Microsoft.AspNetCore.Components.ComponentBase
+    public partial class EditarTicket : global::Microsoft.AspNetCore.Components.ComponentBase
     #nullable disable
     {
         #pragma warning disable 1998
@@ -113,31 +113,36 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (79,8)-(105,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Respondidos.razor"
+#line (85,8)-(116,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
 
-    private List<Ticket>? tickets;
+    [Parameter]
+    public int Id { get; set; }
+
+    private Ticket? ticket;
+    private bool mostrarError = false;
 
     protected override async Task OnInitializedAsync()
     {
-        await CargarTicketsRespondidos();
+        // Traemos los datos actuales desde la API usando el ID
+        ticket = await TicketService.GetTicketByIdAsync(Id);
     }
 
-    private async Task CargarTicketsRespondidos()
+    private async Task ActualizarTicket()
     {
-        var todosLosTickets = await TicketService.GetTicketsAsync();
-        // LINQ filtra y captura estrictamente los que dicen "Respondido"
-        tickets = todosLosTickets?.Where(t => t.Estado == "Respondido").ToList();
-    }
-
-    private async Task Eliminar(int id)
-    {
-        // Llama al servicio para borrarlo de la base de datos
-        var exito = await TicketService.DeleteTicketAsync(id);
-        if (exito)
+        mostrarError = false;
+        if (ticket != null)
         {
-            // Recarga la lista para que el ticket desaparezca de la pantalla
-            await CargarTicketsRespondidos();
-            StateHasChanged();
+            // Mandamos los datos modificados al método PUT de la API
+            var exito = await TicketService.UpdateTicketAsync(ticket);
+            if (exito)
+            {
+                // Si todo sale bien, lo devolvemos a la pantalla de detalle para ver los cambios
+                NavigationManager.NavigateTo($"/ticket/{ticket.Id}");
+            }
+            else
+            {
+                mostrarError = true;
+            }
         }
     }
 
@@ -147,7 +152,25 @@ using SoporteLab.Web.Services
 
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
 #nullable restore
-#line (5,9)-(5,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Respondidos.razor"
+#line (6,9)-(6,26) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
+NavigationManager
+
+#line default
+#line hidden
+#nullable disable
+         
+#nullable restore
+#line (6,27)-(6,44) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
+NavigationManager
+
+#line default
+#line hidden
+#nullable disable
+         { get; set; }
+         = default!;
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
+#nullable restore
+#line (5,9)-(5,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
 TicketService
 
 #line default
@@ -155,7 +178,7 @@ TicketService
 #nullable disable
          
 #nullable restore
-#line (5,23)-(5,36) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Respondidos.razor"
+#line (5,23)-(5,36) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
 TicketService
 
 #line default

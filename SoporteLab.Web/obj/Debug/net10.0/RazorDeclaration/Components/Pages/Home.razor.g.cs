@@ -113,10 +113,21 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (87,8)-(124,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (92,8)-(145,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
 
     private List<Ticket>? tickets;
-    private bool mostrarErrorActualizacion = false;
+    private List<Ticket>? ticketsFiltrados = new();
+
+    private string _textoBusqueda = "";
+    private string TextoBusqueda
+    {
+        get => _textoBusqueda;
+        set
+        {
+            _textoBusqueda = value;
+            AplicarFiltro();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -127,28 +138,33 @@ using SoporteLab.Web.Services
     {
         var todosLosTickets = await TicketService.GetTicketsAsync();
         tickets = todosLosTickets?.Where(t => t.Estado != "Respondido").ToList();
+        AplicarFiltro(); 
+    }
+
+    private void AplicarFiltro()
+    {
+        if (string.IsNullOrWhiteSpace(_textoBusqueda))
+        {
+            ticketsFiltrados = tickets; 
+        }
+        else
+        {
+            ticketsFiltrados = tickets?.Where(t => 
+                t.Id.ToString().Contains(_textoBusqueda) ||
+                (t.Titulo != null && t.Titulo.Contains(_textoBusqueda, StringComparison.OrdinalIgnoreCase)) ||
+                (t.Solicitante != null && t.Solicitante.Contains(_textoBusqueda, StringComparison.OrdinalIgnoreCase))
+            ).ToList();
+        }
     }
 
     private async Task MarcarComoRespondido(Ticket ticketModificar)
     {
-        mostrarErrorActualizacion = false;
-        
-        // Guardamos el estado original por si la API falla y hay que revertir
-        var estadoOriginal = ticketModificar.Estado;
         ticketModificar.Estado = "Respondido";
-        
         var exito = await TicketService.UpdateTicketAsync(ticketModificar);
         if (exito)
         {
             await CargarTicketsPendientes();
             StateHasChanged(); 
-        }
-        else
-        {
-            // Si falló, activamos el cartel rojo y devolvemos el estado a su forma original
-            mostrarErrorActualizacion = true;
-            ticketModificar.Estado = estadoOriginal;
-            StateHasChanged();
         }
     }
 

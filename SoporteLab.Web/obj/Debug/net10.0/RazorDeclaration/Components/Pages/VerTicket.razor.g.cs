@@ -79,13 +79,13 @@ using SoporteLab.Web.Components.Layout
 #nullable disable
     ;
 #nullable restore
-#line (2,2)-(2,29) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (3,2)-(3,29) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 using SoporteLab.Web.Models
 
 #nullable disable
     ;
 #nullable restore
-#line (3,2)-(3,31) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (4,2)-(4,31) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 using SoporteLab.Web.Services
 
 #nullable disable
@@ -102,6 +102,7 @@ using SoporteLab.Web.Services
 #line hidden
 #nullable disable
     )]
+    [global::SoporteLab.Web.Components.Pages.VerTicket.__PrivateComponentRenderModeAttribute]
     #nullable restore
     public partial class VerTicket : global::Microsoft.AspNetCore.Components.ComponentBase
     #nullable disable
@@ -112,7 +113,7 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (84,8)-(107,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (85,8)-(108,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 
     [Parameter]
     public int Id { get; set; }
@@ -143,7 +144,7 @@ using SoporteLab.Web.Services
 
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
 #nullable restore
-#line (5,9)-(5,26) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (6,9)-(6,26) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 NavigationManager
 
 #line default
@@ -151,7 +152,7 @@ NavigationManager
 #nullable disable
          
 #nullable restore
-#line (5,27)-(5,44) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (6,27)-(6,44) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 NavigationManager
 
 #line default
@@ -161,7 +162,7 @@ NavigationManager
          = default!;
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
 #nullable restore
-#line (4,9)-(4,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (5,9)-(5,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 TicketService
 
 #line default
@@ -169,7 +170,7 @@ TicketService
 #nullable disable
          
 #nullable restore
-#line (4,23)-(4,36) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (5,23)-(5,36) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 TicketService
 
 #line default
@@ -177,6 +178,12 @@ TicketService
 #nullable disable
          { get; set; }
          = default!;
+        private sealed class __PrivateComponentRenderModeAttribute : global::Microsoft.AspNetCore.Components.RenderModeAttribute
+        {
+            private static global::Microsoft.AspNetCore.Components.IComponentRenderMode ModeImpl => InteractiveServer
+            ;
+            public override global::Microsoft.AspNetCore.Components.IComponentRenderMode Mode => ModeImpl;
+        }
     }
 }
 #pragma warning restore 1591
