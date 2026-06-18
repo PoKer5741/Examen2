@@ -3,6 +3,7 @@
 @using SoporteLab.Web.Models
 @using SoporteLab.Web.Services
 @inject TicketService TicketService
+@inject NavigationManager NavigationManager
 
 <PageTitle>Tickets Pendientes</PageTitle>
 
@@ -68,12 +69,29 @@ else
                                 <span class="badge bg-secondary">@ticket.Prioridad</span>
                             }
                         </td>
-                        <td><span class="text-info">@ticket.Estado</span></td>
+                        <td>
+                            @if (ticket.Estado == "Nuevo")
+                            {
+                                <span class="badge bg-danger">Nuevo</span>
+                            }
+                            else if (ticket.Estado == "Abierto")
+                            {
+                                <span class="badge bg-info">Abierto</span>
+                            }
+                            else if (ticket.Estado == "En proceso")
+                            {
+                                <span class="badge bg-warning text-dark">En proceso</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@ticket.Estado</span>
+                            }
+                        </td>
                         <td>@ticket.Solicitante</td>
                         <td>@ticket.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>
                             <div class="btn-group gap-1">
-                                <a href="/ticket/@ticket.Id" class="btn btn-sm btn-outline-info">Ver</a>
+                                <button @onclick="() => IrAVerTicket(ticket)" class="btn btn-sm btn-outline-info">Ver</button>
                                 <button @onclick="() => MarcarComoRespondido(ticket)" class="btn btn-sm btn-success">Respondido</button>
                             </div>
                         </td>
@@ -120,7 +138,9 @@ else
     {
         if (string.IsNullOrWhiteSpace(_textoBusqueda))
         {
-            ticketsFiltrados = tickets; 
+            ticketsFiltrados = tickets?
+                .OrderBy(t => t.Prioridad == "Alta" ? 1 : t.Prioridad == "Media" ? 2 : t.Prioridad == "Baja" ? 3 : 4)
+                .ToList(); 
         }
         else
         {
@@ -128,8 +148,21 @@ else
                 t.Id.ToString().Contains(_textoBusqueda) ||
                 (t.Titulo != null && t.Titulo.Contains(_textoBusqueda, StringComparison.OrdinalIgnoreCase)) ||
                 (t.Solicitante != null && t.Solicitante.Contains(_textoBusqueda, StringComparison.OrdinalIgnoreCase))
-            ).ToList();
+            )
+            .OrderBy(t => t.Prioridad == "Alta" ? 1 : t.Prioridad == "Media" ? 2 : t.Prioridad == "Baja" ? 3 : 4)
+            .ToList();
         }
+    }
+
+    // LÓGICA DE CONTROL DE ESTADO AL HACER CLIC EN VER
+    private async Task IrAVerTicket(Ticket t)
+    {
+        if (t.Estado == "Nuevo")
+        {
+            t.Estado = "Abierto";
+            await TicketService.UpdateTicketAsync(t);
+        }
+        NavigationManager.NavigateTo($"/ticket/{t.Id}");
     }
 
     private async Task MarcarComoRespondido(Ticket ticketModificar)

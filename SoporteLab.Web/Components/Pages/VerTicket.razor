@@ -21,17 +21,18 @@ else
             <div class="form-section text-start">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="m-0 text-white">@ticket.Titulo</h2>
-                        @{
-                            var badgeClass = ticket.Prioridad switch {
-                                "Alta" => "badge-alta",
-                                "Media" => "badge-media",
-                                "Baja" => "badge-baja",
-                                _ => "bg-secondary"
-                            };
-                        }
-                        <span class="badge @badgeClass p-2">
-                            Prioridad @ticket.Prioridad
-                        </span>
+                    
+                    @{
+                        var badgeClass = ticket.Prioridad switch {
+                            "Alta" => "badge-alta",
+                            "Media" => "badge-media",
+                            "Baja" => "badge-baja",
+                            _ => "bg-secondary"
+                        };
+                    }
+                    <span class="badge @badgeClass p-2">
+                        Prioridad @ticket.Prioridad
+                    </span>
                 </div>
 
                 <div class="row mb-4">
@@ -59,7 +60,7 @@ else
                     </div>
                     <div class="col-md-6">
                         <p class="mb-1 strong text-muted">Estado Actual:</p>
-                        <span class="badge @(ticket.Estado == "Respondido" ? "bg-success" : "bg-info") p-2">
+                        <span class="badge @(ticket.Estado == "Respondido" ? "bg-success" : ticket.Estado == "En proceso" ? "bg-warning text-dark" : ticket.Estado == "Nuevo" ? "bg-danger" : "bg-info") p-2">
                             @ticket.Estado
                         </span>
                     </div>
@@ -68,7 +69,8 @@ else
                 <hr class="border-secondary" />
 
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="/" class="btn btn-soporte-cancelar">Volver a la Tabla</a>
+                    <a href="@(ticket.Estado == "Respondido" ? "/respondidos" : "/")" class="btn btn-soporte-cancelar">Volver a la Tabla</a>
+                    
                     <div class="gap-2">
                         <a href="/editar/@ticket.Id" class="btn btn-soporte-guardar">Modificar Datos</a>
                         @if (ticket.Estado != "Respondido")

@@ -9,7 +9,7 @@ namespace SoporteLab.Web.Models
         public string Descripcion { get; set; } = string.Empty;
         public string Categoria { get; set; } = string.Empty;
         public string Prioridad { get; set; } = string.Empty;
-        public string Estado { get; set; } = "Abierto"; 
+        public string Estado { get; set; } = "Nuevo";
         public string Solicitante { get; set; } = string.Empty;
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
     }

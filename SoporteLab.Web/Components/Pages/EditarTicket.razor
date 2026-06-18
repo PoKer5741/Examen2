@@ -20,6 +20,15 @@ else
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="form-section">
+                
+                @if (mostrarExito)
+                {
+                    <div class="alert alert-success mb-4 d-flex justify-content-between align-items-center">
+                        <span>¡El ticket se actualizó correctamente!</span>
+                        <button type="button" class="btn-close" @onclick="() => mostrarExito = false"></button>
+                    </div>
+                }
+
                 @if (mostrarError)
                 {
                     <div class="alert alert-danger mb-4">Error al actualizar. Verifica que la API esté corriendo y conectada.</div>
@@ -58,12 +67,13 @@ else
                         </div>
                         <div class="col-md-4">
                             <label class="form-label-soporte text-white">Estado:</label>
-                            <InputSelect @bind-Value="ticket.Estado" class="form-select" required>
-                                <option value="Abierto">Abierto</option>
-                                <option value="En proceso">En proceso</option>
-                                <option value="Respondido">Respondido</option>
-                                <option value="Cerrado">Cerrado</option>
-                            </InputSelect>
+                                <InputSelect @bind-Value="ticket.Estado" class="form-select" required>
+                                    <option value="Nuevo">Nuevo</option>
+                                    <option value="Abierto">Abierto</option>
+                                    <option value="En proceso">En proceso</option>
+                                    <option value="Respondido">Respondido</option>
+                                    <option value="Cerrado">Cerrado</option>
+                                </InputSelect>
                         </div>
                     </div>
 
@@ -74,7 +84,7 @@ else
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <button type="submit" class="btn btn-soporte-guardar me-md-2">Guardar Cambios</button>
-                        <a href="/ticket/@ticket.Id" class="btn btn-soporte-cancelar">Cancelar</a>
+                        <a href="/ticket/@ticket.Id" class="btn btn-soporte-cancelar">Volver</a>
                     </div>
                 </EditForm>
             </div>
@@ -88,24 +98,28 @@ else
 
     private Ticket? ticket;
     private bool mostrarError = false;
+    private bool mostrarExito = false;  
 
     protected override async Task OnInitializedAsync()
     {
-        // Traemos los datos actuales desde la API usando el ID
+        
         ticket = await TicketService.GetTicketByIdAsync(Id);
     }
 
     private async Task ActualizarTicket()
     {
+         
         mostrarError = false;
+        mostrarExito = false;
+
         if (ticket != null)
         {
-            // Mandamos los datos modificados al método PUT de la API
+            
             var exito = await TicketService.UpdateTicketAsync(ticket);
             if (exito)
             {
-                // Si todo sale bien, lo devolvemos a la pantalla de detalle para ver los cambios
-                NavigationManager.NavigateTo($"/ticket/{ticket.Id}");
+                mostrarExito = true;  
+                
             }
             else
             {
