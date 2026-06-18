@@ -113,7 +113,7 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (85,8)-(108,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
+#line (87,8)-(110,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\VerTicket.razor"
 
     [Parameter]
     public int Id { get; set; }

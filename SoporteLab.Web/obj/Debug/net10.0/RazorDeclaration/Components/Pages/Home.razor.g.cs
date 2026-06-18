@@ -113,7 +113,7 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (92,8)-(145,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+#line (110,8)-(178,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
 
     private List<Ticket>? tickets;
     private List<Ticket>? ticketsFiltrados = new();
@@ -145,7 +145,9 @@ using SoporteLab.Web.Services
     {
         if (string.IsNullOrWhiteSpace(_textoBusqueda))
         {
-            ticketsFiltrados = tickets; 
+            ticketsFiltrados = tickets?
+                .OrderBy(t => t.Prioridad == "Alta" ? 1 : t.Prioridad == "Media" ? 2 : t.Prioridad == "Baja" ? 3 : 4)
+                .ToList(); 
         }
         else
         {
@@ -153,8 +155,21 @@ using SoporteLab.Web.Services
                 t.Id.ToString().Contains(_textoBusqueda) ||
                 (t.Titulo != null && t.Titulo.Contains(_textoBusqueda, StringComparison.OrdinalIgnoreCase)) ||
                 (t.Solicitante != null && t.Solicitante.Contains(_textoBusqueda, StringComparison.OrdinalIgnoreCase))
-            ).ToList();
+            )
+            .OrderBy(t => t.Prioridad == "Alta" ? 1 : t.Prioridad == "Media" ? 2 : t.Prioridad == "Baja" ? 3 : 4)
+            .ToList();
         }
+    }
+
+    // LÓGICA DE CONTROL DE ESTADO AL HACER CLIC EN VER
+    private async Task IrAVerTicket(Ticket t)
+    {
+        if (t.Estado == "Nuevo")
+        {
+            t.Estado = "Abierto";
+            await TicketService.UpdateTicketAsync(t);
+        }
+        NavigationManager.NavigateTo($"/ticket/{t.Id}");
     }
 
     private async Task MarcarComoRespondido(Ticket ticketModificar)
@@ -172,6 +187,24 @@ using SoporteLab.Web.Services
 #line hidden
 #nullable disable
 
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
+#nullable restore
+#line (6,9)-(6,26) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+NavigationManager
+
+#line default
+#line hidden
+#nullable disable
+         
+#nullable restore
+#line (6,27)-(6,44) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"
+NavigationManager
+
+#line default
+#line hidden
+#nullable disable
+         { get; set; }
+         = default!;
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private 
 #nullable restore
 #line (5,9)-(5,22) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\Home.razor"

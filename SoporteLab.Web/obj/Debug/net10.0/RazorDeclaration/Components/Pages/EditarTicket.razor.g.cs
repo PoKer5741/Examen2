@@ -113,31 +113,35 @@ using SoporteLab.Web.Services
         }
         #pragma warning restore 1998
 #nullable restore
-#line (85,8)-(116,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
+#line (95,8)-(130,1) "c:\Users\poker\Downloads\pratica\SoporteLab\SoporteLab.Web\Components\Pages\EditarTicket.razor"
 
     [Parameter]
     public int Id { get; set; }
 
     private Ticket? ticket;
     private bool mostrarError = false;
+    private bool mostrarExito = false;  
 
     protected override async Task OnInitializedAsync()
     {
-        // Traemos los datos actuales desde la API usando el ID
+        
         ticket = await TicketService.GetTicketByIdAsync(Id);
     }
 
     private async Task ActualizarTicket()
     {
+         
         mostrarError = false;
+        mostrarExito = false;
+
         if (ticket != null)
         {
-            // Mandamos los datos modificados al método PUT de la API
+            
             var exito = await TicketService.UpdateTicketAsync(ticket);
             if (exito)
             {
-                // Si todo sale bien, lo devolvemos a la pantalla de detalle para ver los cambios
-                NavigationManager.NavigateTo($"/ticket/{ticket.Id}");
+                mostrarExito = true;  
+                
             }
             else
             {

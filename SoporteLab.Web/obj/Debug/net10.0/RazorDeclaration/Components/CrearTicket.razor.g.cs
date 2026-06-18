@@ -126,14 +126,14 @@ using SoporteLab.Web.Services
         mostrarExito = false;
         
         ticket.FechaRegistro = DateTime.Now;
-        ticket.Estado = "Abierto";
+        ticket.Estado = "Nuevo";  
 
         var exito = await TicketService.CreateTicketAsync(ticket);
         
         if (exito)
         {
             mostrarExito = true;
-            ticket = new(); // <-- ¡El truco! Instancia un objeto vacío y limpia por completo el formulario
+            ticket = new();  
         }
         else
         {
